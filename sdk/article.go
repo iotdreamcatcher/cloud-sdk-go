@@ -54,7 +54,7 @@ func (c *Sdk) ArticleCheckStatus() *Sdk {
 	return c
 }
 
-func (c *Sdk) ListArticle(in *article.ListArticleParams) (*article.ArticleResp, error) {
+func (c *Sdk) ArticleListArticle(in *article.ListArticleParams) (*article.ArticleListResp, error) {
 	res, err := c.Article.ListArticle(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
@@ -62,7 +62,7 @@ func (c *Sdk) ListArticle(in *article.ListArticleParams) (*article.ArticleResp, 
 	return res, nil
 }
 
-func (c *Sdk) ArticleInfo(in *article.ArticleInfoParams) (*article.ArticleResp, error) {
+func (c *Sdk) ArticleArticleInfo(in *article.ArticleInfoParams) (*article.ArticleInfoResp, error) {
 	res, err := c.Article.ArticleInfo(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
@@ -70,7 +70,7 @@ func (c *Sdk) ArticleInfo(in *article.ArticleInfoParams) (*article.ArticleResp, 
 	return res, nil
 }
 
-func (c *Sdk) AddArticle(in *article.EditArticleParams) (*article.ArticleResp, error) {
+func (c *Sdk) ArticleAddArticle(in *article.EditArticleParams) (*article.ArticleAddResp, error) {
 	res, err := c.Article.AddArticle(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
@@ -78,7 +78,7 @@ func (c *Sdk) AddArticle(in *article.EditArticleParams) (*article.ArticleResp, e
 	return res, nil
 }
 
-func (c *Sdk) EditArticle(in *article.EditArticleParams) (*article.ArticleResp, error) {
+func (c *Sdk) ArticleEditArticle(in *article.EditArticleParams) (*article.ArticleOkResp, error) {
 	res, err := c.Article.EditArticle(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
@@ -86,7 +86,7 @@ func (c *Sdk) EditArticle(in *article.EditArticleParams) (*article.ArticleResp, 
 	return res, nil
 }
 
-func (c *Sdk) DeleteArticle(in *article.DeleteParams) (*article.ArticleResp, error) {
+func (c *Sdk) ArticleDeleteArticle(in *article.DeleteParams) (*article.ArticleOkResp, error) {
 	res, err := c.Article.DeleteArticle(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (c *Sdk) DeleteArticle(in *article.DeleteParams) (*article.ArticleResp, err
 	return res, nil
 }
 
-func (c *Sdk) ReviewArticle(in *article.ReviewArticleParams) (*article.ArticleResp, error) {
+func (c *Sdk) ArticleReviewArticle(in *article.ReviewArticleParams) (*article.ArticleOkResp, error) {
 	res, err := c.Article.ReviewArticle(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
@@ -102,7 +102,7 @@ func (c *Sdk) ReviewArticle(in *article.ReviewArticleParams) (*article.ArticleRe
 	return res, nil
 }
 
-func (c *Sdk) ListLabel(in *article.ListLabelParams) (*article.ArticleResp, error) {
+func (c *Sdk) ArticleListLabel(in *article.ListLabelParams) (*article.LabelListResp, error) {
 	res, err := c.Article.ListLabel(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
@@ -110,14 +110,22 @@ func (c *Sdk) ListLabel(in *article.ListLabelParams) (*article.ArticleResp, erro
 	return res, nil
 }
 
-func (c *Sdk) LabelInfo(in *article.LabelInfoParams) (*article.ArticleResp, error) {
+func (c *Sdk) ArticleLabelInfo(in *article.LabelInfoParams) (*article.LabelInfoResp, error) {
 	res, err := c.Article.LabelInfo(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
 	}
 	return res, nil
 }
-func (c *Sdk) UpdateLabel(in *article.UpdateLabelParams) (*article.ArticleResp, error) {
+
+func (c *Sdk) ArticleAddLabel(in *article.AddLabelParams) (*article.LabelInfoResp, error) {
+	res, err := c.Article.AddLabel(c.SonyCtx(), in)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+func (c *Sdk) ArticleUpdateLabel(in *article.UpdateLabelParams) (*article.ArticleOkResp, error) {
 	res, err := c.Article.UpdateLabel(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
@@ -125,7 +133,7 @@ func (c *Sdk) UpdateLabel(in *article.UpdateLabelParams) (*article.ArticleResp, 
 	return res, nil
 }
 
-func (c *Sdk) DeleteLabel(in *article.DeleteParams) (*article.ArticleResp, error) {
+func (c *Sdk) ArticleDeleteLabel(in *article.DeleteParams) (*article.ArticleOkResp, error) {
 	res, err := c.Article.DeleteLabel(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err

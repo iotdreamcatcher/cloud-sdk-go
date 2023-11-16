@@ -19,6 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	CloudCService_SystemConfigSet_FullMethodName     = "/cloudc.CloudCService/SystemConfigSet"
+	CloudCService_SystemConfigGet_FullMethodName     = "/cloudc.CloudCService/SystemConfigGet"
+	CloudCService_SystemConfigGetAll_FullMethodName  = "/cloudc.CloudCService/SystemConfigGetAll"
 	CloudCService_CaptchaConfigSet_FullMethodName    = "/cloudc.CloudCService/CaptchaConfigSet"
 	CloudCService_CaptchaConfigGet_FullMethodName    = "/cloudc.CloudCService/CaptchaConfigGet"
 	CloudCService_CaptchaConfigGetAll_FullMethodName = "/cloudc.CloudCService/CaptchaConfigGetAll"
@@ -43,6 +46,10 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CloudCServiceClient interface {
+	// note: 服务器系统配置
+	SystemConfigSet(ctx context.Context, in *SystemConfigSetParams, opts ...grpc.CallOption) (*ConfigResp, error)
+	SystemConfigGet(ctx context.Context, in *ConfigGetParams, opts ...grpc.CallOption) (*SystemConfigGetResp, error)
+	SystemConfigGetAll(ctx context.Context, in *ConfigGetAllParams, opts ...grpc.CallOption) (*SystemConfigGetAllResp, error)
 	// note: captcha
 	CaptchaConfigSet(ctx context.Context, in *CaptchaConfigSetParams, opts ...grpc.CallOption) (*ConfigResp, error)
 	CaptchaConfigGet(ctx context.Context, in *ConfigGetParams, opts ...grpc.CallOption) (*CaptchaConfigGetResp, error)
@@ -76,6 +83,33 @@ type cloudCServiceClient struct {
 
 func NewCloudCServiceClient(cc grpc.ClientConnInterface) CloudCServiceClient {
 	return &cloudCServiceClient{cc}
+}
+
+func (c *cloudCServiceClient) SystemConfigSet(ctx context.Context, in *SystemConfigSetParams, opts ...grpc.CallOption) (*ConfigResp, error) {
+	out := new(ConfigResp)
+	err := c.cc.Invoke(ctx, CloudCService_SystemConfigSet_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudCServiceClient) SystemConfigGet(ctx context.Context, in *ConfigGetParams, opts ...grpc.CallOption) (*SystemConfigGetResp, error) {
+	out := new(SystemConfigGetResp)
+	err := c.cc.Invoke(ctx, CloudCService_SystemConfigGet_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudCServiceClient) SystemConfigGetAll(ctx context.Context, in *ConfigGetAllParams, opts ...grpc.CallOption) (*SystemConfigGetAllResp, error) {
+	out := new(SystemConfigGetAllResp)
+	err := c.cc.Invoke(ctx, CloudCService_SystemConfigGetAll_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *cloudCServiceClient) CaptchaConfigSet(ctx context.Context, in *CaptchaConfigSetParams, opts ...grpc.CallOption) (*ConfigResp, error) {
@@ -244,6 +278,10 @@ func (c *cloudCServiceClient) OssConfigGetAll(ctx context.Context, in *ConfigGet
 // All implementations must embed UnimplementedCloudCServiceServer
 // for forward compatibility
 type CloudCServiceServer interface {
+	// note: 服务器系统配置
+	SystemConfigSet(context.Context, *SystemConfigSetParams) (*ConfigResp, error)
+	SystemConfigGet(context.Context, *ConfigGetParams) (*SystemConfigGetResp, error)
+	SystemConfigGetAll(context.Context, *ConfigGetAllParams) (*SystemConfigGetAllResp, error)
 	// note: captcha
 	CaptchaConfigSet(context.Context, *CaptchaConfigSetParams) (*ConfigResp, error)
 	CaptchaConfigGet(context.Context, *ConfigGetParams) (*CaptchaConfigGetResp, error)
@@ -276,6 +314,15 @@ type CloudCServiceServer interface {
 type UnimplementedCloudCServiceServer struct {
 }
 
+func (UnimplementedCloudCServiceServer) SystemConfigSet(context.Context, *SystemConfigSetParams) (*ConfigResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SystemConfigSet not implemented")
+}
+func (UnimplementedCloudCServiceServer) SystemConfigGet(context.Context, *ConfigGetParams) (*SystemConfigGetResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SystemConfigGet not implemented")
+}
+func (UnimplementedCloudCServiceServer) SystemConfigGetAll(context.Context, *ConfigGetAllParams) (*SystemConfigGetAllResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SystemConfigGetAll not implemented")
+}
 func (UnimplementedCloudCServiceServer) CaptchaConfigSet(context.Context, *CaptchaConfigSetParams) (*ConfigResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CaptchaConfigSet not implemented")
 }
@@ -341,6 +388,60 @@ type UnsafeCloudCServiceServer interface {
 
 func RegisterCloudCServiceServer(s grpc.ServiceRegistrar, srv CloudCServiceServer) {
 	s.RegisterService(&CloudCService_ServiceDesc, srv)
+}
+
+func _CloudCService_SystemConfigSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SystemConfigSetParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudCServiceServer).SystemConfigSet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CloudCService_SystemConfigSet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudCServiceServer).SystemConfigSet(ctx, req.(*SystemConfigSetParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudCService_SystemConfigGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfigGetParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudCServiceServer).SystemConfigGet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CloudCService_SystemConfigGet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudCServiceServer).SystemConfigGet(ctx, req.(*ConfigGetParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudCService_SystemConfigGetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfigGetAllParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudCServiceServer).SystemConfigGetAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CloudCService_SystemConfigGetAll_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudCServiceServer).SystemConfigGetAll(ctx, req.(*ConfigGetAllParams))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _CloudCService_CaptchaConfigSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -674,6 +775,18 @@ var CloudCService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "cloudc.CloudCService",
 	HandlerType: (*CloudCServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SystemConfigSet",
+			Handler:    _CloudCService_SystemConfigSet_Handler,
+		},
+		{
+			MethodName: "SystemConfigGet",
+			Handler:    _CloudCService_SystemConfigGet_Handler,
+		},
+		{
+			MethodName: "SystemConfigGetAll",
+			Handler:    _CloudCService_SystemConfigGetAll_Handler,
+		},
 		{
 			MethodName: "CaptchaConfigSet",
 			Handler:    _CloudCService_CaptchaConfigSet_Handler,

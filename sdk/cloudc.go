@@ -164,3 +164,27 @@ func (c *Sdk) CloudCCaptchaConfigGetAll() (*cloudc.CaptchaConfigGetAllResp, erro
 	}
 	return res, nil
 }
+
+func (c *Sdk) CloudCSystemConfigSet(in *cloudc.SystemConfigSetParams) (*cloudc.ConfigResp, error) {
+	res, err := c.CloudC.SystemConfigSet(c.SonyCtx(), in)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *Sdk) CloudCSystemConfigGet(in *cloudc.ConfigGetParams) (*cloudc.SystemConfigGetResp, error) {
+	res, err := c.CloudC.SystemConfigGet(c.SonyCtx(), in)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *Sdk) CloudCSystemConfigGetAll() (*cloudc.SystemConfigGetAllResp, error) {
+	res, err := c.CloudC.SystemConfigGetAll(c.SonyCtx(), &cloudc.ConfigGetAllParams{})
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}

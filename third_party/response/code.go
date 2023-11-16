@@ -24,6 +24,9 @@ const (
 	ACCESS_CODE_WRONG      int32 = 2007
 	GROUP_ALREADY_EXISTS   int32 = 2008
 	ACCESS_TOO_FAST        int32 = 2009
+	DELETE_ADMIN_WRONG     int32 = 2010
+	CANT_CREATE_GROUP      int32 = 2011
+	CANT_CREATE_ACCOUNT    int32 = 2012
 
 	NOT_FOUND int32 = 3001
 
@@ -33,6 +36,7 @@ const (
 	METADATA_NOT_FOUND      int32 = 4005
 	AUTHORIZATION_NOT_FOUND int32 = 4006
 	ACCESSKEY_NOT_FOUND     int32 = 4007
+	WRONG_CAPTCHA           int32 = 4008
 
 	SERVER_WRONG int32 = 5000
 
@@ -56,7 +60,11 @@ var WrongMessageEn = map[int32]string{
 	ACCESS_PWD_WRONG:       "incorrect username or password",
 	ACCESS_KEY_INVALID:     "AccessKey is invalid",
 	ACCOUNT_ALREADY_EXISTS: "user already exists",
+	ACCESS_CODE_WRONG:      "verification code error",
 	ACCESS_TOO_FAST:        "Access too fast",
+	GROUP_ALREADY_EXISTS:   "user group already exists",
+	CANT_CREATE_GROUP:      "Super administrator cannot create groups",
+	CANT_CREATE_ACCOUNT:    "unable to create sub-account, please use root account to create one",
 
 	NOT_FOUND:               "record not found",
 	FAIL:                    "fail",
@@ -65,6 +73,9 @@ var WrongMessageEn = map[int32]string{
 	METADATA_NOT_FOUND:      "metadata not found",
 	AUTHORIZATION_NOT_FOUND: "authorization not found",
 	ACCESSKEY_NOT_FOUND:     "accesskey not found",
+	WRONG_CAPTCHA:           "wrong captcha",
+
+	DELETE_ADMIN_WRONG: "super administrator cannot be deleted",
 
 	SERVER_WRONG: "Internal Server Error",
 
@@ -79,7 +90,7 @@ var WrongMessageEn = map[int32]string{
 type ApiResponse struct {
 	Code    int32       `json:"code"`    // 状态码
 	Message string      `json:"message"` // 状态短语
-	Result  interface{} `json:"types"`   // 数据结果集
+	Result  interface{} `json:"result"`  // 数据结果集
 }
 
 var WrongMessageZh = map[int32]string{
@@ -93,6 +104,11 @@ var WrongMessageZh = map[int32]string{
 	ACCESS_KEY_INVALID:     "AccessKey无效",
 	ACCOUNT_ALREADY_EXISTS: "用户已存在",
 	ACCESS_TOO_FAST:        "太频繁了",
+	ACCESS_CODE_WRONG:      "验证码错误",
+	DELETE_ADMIN_WRONG:     "超级管理员不可删除",
+	GROUP_ALREADY_EXISTS:   "用户组已存在",
+	CANT_CREATE_GROUP:      "超级管理员不可创建组",
+	CANT_CREATE_ACCOUNT:    "无法创建子账号,请用根账号创建",
 
 	NOT_FOUND: "记录未找到",
 
@@ -102,6 +118,7 @@ var WrongMessageZh = map[int32]string{
 	METADATA_NOT_FOUND:      "没找到metadata",
 	AUTHORIZATION_NOT_FOUND: "没找到验证头",
 	ACCESSKEY_NOT_FOUND:     "没找到用户appid",
+	WRONG_CAPTCHA:           "验证码错误",
 
 	SERVER_WRONG: "服务器错误",
 
@@ -139,11 +156,11 @@ func StatusText(code int32, v ...any) string {
 			lang = "zh"
 		}
 		if lang == "zh" {
-			return WrongMessageEn[code]
+			return WrongMessageZh[code]
 		}
 		return WrongMessageEn[code]
 	} else {
-		return WrongMessageEn[code]
+		return WrongMessageZh[code]
 	}
 }
 

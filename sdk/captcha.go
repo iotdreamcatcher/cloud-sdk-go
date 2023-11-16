@@ -5,9 +5,9 @@ import (
 	"github.com/iotdreamcatcher/cloud-sdk-go/pb/captcha"
 	"github.com/iotdreamcatcher/cloud-sdk-go/pb/cloudc"
 	"github.com/iotdreamcatcher/cloud-sdk-go/sdk/types"
+	"github.com/iotdreamcatcher/cloud-sdk-go/third_party/response"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/zrpc"
-	"third_party/response"
 )
 
 type Captcha struct {

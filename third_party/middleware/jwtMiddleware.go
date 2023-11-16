@@ -64,7 +64,7 @@ func (SvcCtx *MiddleContext) JwtUnaryInterceptor(ctx context.Context, req interf
 	if len(AccessKey) < 1 {
 		result.Code = response.ACCESSKEY_NOT_FOUND
 		result.Msg = response.StatusText(response.ACCESSKEY_NOT_FOUND)
-		//resultMsg, _ := ReturnProtoMsg(*types, info.FullMethod)
+		//resultMsg, _ := ReturnProtoMsg(*result, info.FullMethod)
 		//logx.Infof("能运行到这里吗")
 		return result, nil
 	}

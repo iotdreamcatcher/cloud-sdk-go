@@ -39,76 +39,76 @@ func main() {
 		Label:     []string{"儿童故事"},
 		Type:      1,
 	}
-	result, err := s.AddArticle(info)
+	result1, err := s.ArticleAddArticle(info)
 	if err != nil {
 		panic(err)
 	}
-	logx.Infof("打印一下请求的结果:%+v", result)
+	logx.Infof("打印一下请求的结果:%+v", result1)
 
 	articleInfo := struct {
 		ID int64 `json:"ID"`
 	}{}
-	err = json.Unmarshal([]byte(result.Data.Data), &articleInfo)
+	err = json.Unmarshal([]byte(result1.Data.String()), &articleInfo)
 	if err != nil {
 		panic(err)
 	}
 	logx.Infof("打印一下文章:%+v", info)
 
-	result, err = s.ListArticle(&article.ListArticleParams{
+	result2, err := s.ArticleListArticle(&article.ListArticleParams{
 		PageSize: 10,
 		PageNum:  1,
 	})
 	if err != nil {
 		panic(err)
 	}
-	logx.Infof("打印一下请求的结果:%+v", result)
+	logx.Infof("打印一下请求的结果:%+v", result2)
 	info.Id = articleInfo.ID
 	info.Author = "test"
-	result, err = s.EditArticle(info)
+	result3, err := s.ArticleEditArticle(info)
 	if err != nil {
 		panic(err)
 	}
-	logx.Infof("打印一下请求的结果:%+v", result)
+	logx.Infof("打印一下请求的结果:%+v", result3)
 
-	result, err = s.ArticleInfo(&article.ArticleInfoParams{Id: info.Id})
+	result4, err := s.ArticleArticleInfo(&article.ArticleInfoParams{Id: info.Id})
 	if err != nil {
 		panic(err)
 	}
-	logx.Infof("打印一下请求的结果:%+v", result)
-	result, err = s.DeleteArticle(&article.DeleteParams{Id: info.Id})
+	logx.Infof("打印一下请求的结果:%+v", result4)
+	result5, err := s.ArticleDeleteArticle(&article.DeleteParams{Id: info.Id})
 	if err != nil {
 		panic(err)
 	}
-	logx.Infof("打印一下请求的结果:%+v", result)
+	logx.Infof("打印一下请求的结果:%+v", result5)
 
-	result, err = s.ListLabel(&article.ListLabelParams{
+	result6, err := s.ArticleListLabel(&article.ListLabelParams{
 		PageSize: 10,
 		PageNum:  1,
 	})
 	if err != nil {
 		panic(err)
 	}
-	logx.Infof("打印一下请求的结果:%+v", result)
+	logx.Infof("打印一下请求的结果:%+v", result6)
 
-	result, err = s.UpdateLabel(&article.UpdateLabelParams{
+	result7, err := s.ArticleUpdateLabel(&article.UpdateLabelParams{
 		Id:   47,
 		Name: "新闻趋势",
 	})
 	if err != nil {
 		panic(err)
 	}
-	logx.Infof("打印一下请求的结果:%+v", result)
+	logx.Infof("打印一下请求的结果:%+v", result7)
 
-	result, err = s.LabelInfo(&article.LabelInfoParams{Id: 47})
+	result8, err := s.ArticleLabelInfo(&article.LabelInfoParams{Id: 47})
 	if err != nil {
 		panic(err)
 	}
-	logx.Infof("打印一下请求的结果:%+v", result)
+	logx.Infof("打印一下请求的结果:%+v", result8)
 
-	result, err = s.DeleteLabel(&article.DeleteParams{Id: 47})
+	result9, err := s.ArticleDeleteLabel(&article.DeleteParams{Id: 47})
 	if err != nil {
 		panic(err)
 	}
-	logx.Infof("打印一下请求的结果:%+v", result)
+	logx.Infof("打印一下请求的结果:%+v", result9)
 	select {}
 }

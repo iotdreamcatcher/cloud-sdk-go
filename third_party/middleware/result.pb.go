@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.31.0
 // 	protoc        v3.19.4
-// source: types.proto
+// source: result.proto
 
 package middleware
 
@@ -119,7 +119,7 @@ func file_result_proto_rawDescGZIP() []byte {
 
 var file_result_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_result_proto_goTypes = []interface{}{
-	(*Resp)(nil), // 0: types.Resp
+	(*Resp)(nil), // 0: result.Resp
 }
 var file_result_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
