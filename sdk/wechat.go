@@ -98,18 +98,6 @@ func (c *Sdk) WechatLoadCloudConfig() (*Sdk, error) {
 	return c, nil
 }
 
-func (c *Sdk) WechatWebAutoRedirectWechat(in *wechat.WebAutoRedirectReq) (*wechat.WebAutoRedirectResp, error) {
-	// note: 读取当前使用配置
-	if c.Wechat.UsingConfig == nil {
-		c.Wechat.UsingConfig = c.Wechat.Configs["default"]
-	}
-	res, err := c.Wechat.WebAutoRedirectWechat(c.SonyCtx(), in)
-	if err != nil {
-		return nil, err
-	}
-	return res, nil
-}
-
 func (c *Sdk) WechatWebRedirectWechat(in *wechat.WebRedirectReq) (*wechat.WebRedirectResp, error) {
 	// note: 读取当前使用配置
 	if c.Wechat.UsingConfig == nil {
@@ -122,48 +110,36 @@ func (c *Sdk) WechatWebRedirectWechat(in *wechat.WebRedirectReq) (*wechat.WebRed
 	return res, nil
 }
 
-func (c *Sdk) WechatWebCode2Token(in *wechat.WebCodeReq) (*wechat.WebCodeResp, error) {
+func (c *Sdk) WechatCode2Token(in *wechat.WebCodeReq) (*wechat.WebCodeResp, error) {
 	// note: 读取当前使用配置
 	if c.Wechat.UsingConfig == nil {
 		c.Wechat.UsingConfig = c.Wechat.Configs["default"]
 	}
-	res, err := c.Wechat.WebCode2Token(c.SonyCtx(), in)
+	res, err := c.Wechat.Code2Token(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
 	}
 	return res, nil
 }
 
-func (c *Sdk) WechatWebRefreshToken(in *wechat.WebRefreshReq) (*wechat.WebRefreshResp, error) {
+func (c *Sdk) WechatRefreshUserToken(in *wechat.WebRefreshReq) (*wechat.WebRefreshResp, error) {
 	// note: 读取当前使用配置
 	if c.Wechat.UsingConfig == nil {
 		c.Wechat.UsingConfig = c.Wechat.Configs["default"]
 	}
-	res, err := c.Wechat.WebRefreshToken(c.SonyCtx(), in)
+	res, err := c.Wechat.RefreshUserToken(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
 	}
 	return res, nil
 }
 
-func (c *Sdk) WechatWebGetUserInfo(in *wechat.WebGetUserInfoReq) (*wechat.WebGetUserInfoResp, error) {
+func (c *Sdk) WechatUserToken2UserInfo(in *wechat.WebTokenReq) (*wechat.WebUserInfoResp, error) {
 	// note: 读取当前使用配置
 	if c.Wechat.UsingConfig == nil {
 		c.Wechat.UsingConfig = c.Wechat.Configs["default"]
 	}
-	res, err := c.Wechat.WebGetUserInfo(c.SonyCtx(), in)
-	if err != nil {
-		return nil, err
-	}
-	return res, nil
-}
-
-func (c *Sdk) WechatWebToken2UserInfo(in *wechat.WebTokenReq) (*wechat.WebUserInfoResp, error) {
-	// note: 读取当前使用配置
-	if c.Wechat.UsingConfig == nil {
-		c.Wechat.UsingConfig = c.Wechat.Configs["default"]
-	}
-	res, err := c.Wechat.WebToken2UserInfo(c.SonyCtx(), in)
+	res, err := c.Wechat.UserToken2UserInfo(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
 	}
