@@ -157,3 +157,15 @@ func (c *Sdk) WechatOfficialAccountAccessToken(in *wechat.OaKeyReq) (*wechat.OaA
 	}
 	return res, nil
 }
+
+func (c *Sdk) WechatWebAutoRedirectWechat(in *wechat.WebAutoRedirectReq) (*wechat.WebAutoRedirectResp, error) {
+	// note: 读取当前使用配置
+	if c.Wechat.UsingConfig == nil {
+		c.Wechat.UsingConfig = c.Wechat.Configs["default"]
+	}
+	res, err := c.Wechat.WebAutoRedirectWechat(c.SonyCtx(), in)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}

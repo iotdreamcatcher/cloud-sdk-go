@@ -23,6 +23,7 @@ const (
 	WechatRpcService_RefreshUserToken_FullMethodName           = "/wechat.WechatRpcService/RefreshUserToken"
 	WechatRpcService_UserToken2UserInfo_FullMethodName         = "/wechat.WechatRpcService/UserToken2UserInfo"
 	WechatRpcService_WebRedirectWechat_FullMethodName          = "/wechat.WechatRpcService/WebRedirectWechat"
+	WechatRpcService_WebAutoRedirectWechat_FullMethodName      = "/wechat.WechatRpcService/WebAutoRedirectWechat"
 	WechatRpcService_OfficialAccountAccessToken_FullMethodName = "/wechat.WechatRpcService/OfficialAccountAccessToken"
 )
 
@@ -36,6 +37,7 @@ type WechatRpcServiceClient interface {
 	UserToken2UserInfo(ctx context.Context, in *WebTokenReq, opts ...grpc.CallOption) (*WebUserInfoResp, error)
 	// note: web
 	WebRedirectWechat(ctx context.Context, in *WebRedirectReq, opts ...grpc.CallOption) (*WebRedirectResp, error)
+	WebAutoRedirectWechat(ctx context.Context, in *WebAutoRedirectReq, opts ...grpc.CallOption) (*WebAutoRedirectResp, error)
 	// note: base OfficialAccount 公众号基础能力
 	OfficialAccountAccessToken(ctx context.Context, in *OaKeyReq, opts ...grpc.CallOption) (*OaAccessTokenResp, error)
 }
@@ -84,6 +86,15 @@ func (c *wechatRpcServiceClient) WebRedirectWechat(ctx context.Context, in *WebR
 	return out, nil
 }
 
+func (c *wechatRpcServiceClient) WebAutoRedirectWechat(ctx context.Context, in *WebAutoRedirectReq, opts ...grpc.CallOption) (*WebAutoRedirectResp, error) {
+	out := new(WebAutoRedirectResp)
+	err := c.cc.Invoke(ctx, WechatRpcService_WebAutoRedirectWechat_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wechatRpcServiceClient) OfficialAccountAccessToken(ctx context.Context, in *OaKeyReq, opts ...grpc.CallOption) (*OaAccessTokenResp, error) {
 	out := new(OaAccessTokenResp)
 	err := c.cc.Invoke(ctx, WechatRpcService_OfficialAccountAccessToken_FullMethodName, in, out, opts...)
@@ -103,6 +114,7 @@ type WechatRpcServiceServer interface {
 	UserToken2UserInfo(context.Context, *WebTokenReq) (*WebUserInfoResp, error)
 	// note: web
 	WebRedirectWechat(context.Context, *WebRedirectReq) (*WebRedirectResp, error)
+	WebAutoRedirectWechat(context.Context, *WebAutoRedirectReq) (*WebAutoRedirectResp, error)
 	// note: base OfficialAccount 公众号基础能力
 	OfficialAccountAccessToken(context.Context, *OaKeyReq) (*OaAccessTokenResp, error)
 	mustEmbedUnimplementedWechatRpcServiceServer()
@@ -123,6 +135,9 @@ func (UnimplementedWechatRpcServiceServer) UserToken2UserInfo(context.Context, *
 }
 func (UnimplementedWechatRpcServiceServer) WebRedirectWechat(context.Context, *WebRedirectReq) (*WebRedirectResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WebRedirectWechat not implemented")
+}
+func (UnimplementedWechatRpcServiceServer) WebAutoRedirectWechat(context.Context, *WebAutoRedirectReq) (*WebAutoRedirectResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WebAutoRedirectWechat not implemented")
 }
 func (UnimplementedWechatRpcServiceServer) OfficialAccountAccessToken(context.Context, *OaKeyReq) (*OaAccessTokenResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OfficialAccountAccessToken not implemented")
@@ -212,6 +227,24 @@ func _WechatRpcService_WebRedirectWechat_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WechatRpcService_WebAutoRedirectWechat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WebAutoRedirectReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WechatRpcServiceServer).WebAutoRedirectWechat(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WechatRpcService_WebAutoRedirectWechat_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WechatRpcServiceServer).WebAutoRedirectWechat(ctx, req.(*WebAutoRedirectReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WechatRpcService_OfficialAccountAccessToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OaKeyReq)
 	if err := dec(in); err != nil {
@@ -252,6 +285,10 @@ var WechatRpcService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WebRedirectWechat",
 			Handler:    _WechatRpcService_WebRedirectWechat_Handler,
+		},
+		{
+			MethodName: "WebAutoRedirectWechat",
+			Handler:    _WechatRpcService_WebAutoRedirectWechat_Handler,
 		},
 		{
 			MethodName: "OfficialAccountAccessToken",
