@@ -110,7 +110,7 @@ func (c *Sdk) WechatWebRedirectWechat(in *wechat.WebRedirectReq) (*wechat.WebRed
 	return res, nil
 }
 
-func (c *Sdk) WechatCode2Token(in *wechat.WebCodeReq) (*wechat.WebCodeResp, error) {
+func (c *Sdk) WechatCode2Token(in *wechat.CodeReq) (*wechat.CodeResp, error) {
 	// note: 读取当前使用配置
 	if c.Wechat.UsingConfig == nil {
 		c.Wechat.UsingConfig = c.Wechat.Configs["default"]
@@ -122,7 +122,7 @@ func (c *Sdk) WechatCode2Token(in *wechat.WebCodeReq) (*wechat.WebCodeResp, erro
 	return res, nil
 }
 
-func (c *Sdk) WechatRefreshUserToken(in *wechat.WebRefreshReq) (*wechat.WebRefreshResp, error) {
+func (c *Sdk) WechatRefreshUserToken(in *wechat.RefreshReq) (*wechat.RefreshResp, error) {
 	// note: 读取当前使用配置
 	if c.Wechat.UsingConfig == nil {
 		c.Wechat.UsingConfig = c.Wechat.Configs["default"]
@@ -134,7 +134,7 @@ func (c *Sdk) WechatRefreshUserToken(in *wechat.WebRefreshReq) (*wechat.WebRefre
 	return res, nil
 }
 
-func (c *Sdk) WechatUserToken2UserInfo(in *wechat.WebTokenReq) (*wechat.WebUserInfoResp, error) {
+func (c *Sdk) WechatUserToken2UserInfo(in *wechat.TokenReq) (*wechat.UserInfoResp, error) {
 	// note: 读取当前使用配置
 	if c.Wechat.UsingConfig == nil {
 		c.Wechat.UsingConfig = c.Wechat.Configs["default"]

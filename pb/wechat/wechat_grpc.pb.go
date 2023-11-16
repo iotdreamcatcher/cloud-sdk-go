@@ -32,9 +32,9 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type WechatRpcServiceClient interface {
 	// note: common
-	Code2Token(ctx context.Context, in *WebCodeReq, opts ...grpc.CallOption) (*WebCodeResp, error)
-	RefreshUserToken(ctx context.Context, in *WebRefreshReq, opts ...grpc.CallOption) (*WebRefreshResp, error)
-	UserToken2UserInfo(ctx context.Context, in *WebTokenReq, opts ...grpc.CallOption) (*WebUserInfoResp, error)
+	Code2Token(ctx context.Context, in *CodeReq, opts ...grpc.CallOption) (*CodeResp, error)
+	RefreshUserToken(ctx context.Context, in *RefreshReq, opts ...grpc.CallOption) (*RefreshResp, error)
+	UserToken2UserInfo(ctx context.Context, in *TokenReq, opts ...grpc.CallOption) (*UserInfoResp, error)
 	// note: web
 	WebRedirectWechat(ctx context.Context, in *WebRedirectReq, opts ...grpc.CallOption) (*WebRedirectResp, error)
 	WebAutoRedirectWechat(ctx context.Context, in *WebAutoRedirectReq, opts ...grpc.CallOption) (*WebAutoRedirectResp, error)
@@ -50,8 +50,8 @@ func NewWechatRpcServiceClient(cc grpc.ClientConnInterface) WechatRpcServiceClie
 	return &wechatRpcServiceClient{cc}
 }
 
-func (c *wechatRpcServiceClient) Code2Token(ctx context.Context, in *WebCodeReq, opts ...grpc.CallOption) (*WebCodeResp, error) {
-	out := new(WebCodeResp)
+func (c *wechatRpcServiceClient) Code2Token(ctx context.Context, in *CodeReq, opts ...grpc.CallOption) (*CodeResp, error) {
+	out := new(CodeResp)
 	err := c.cc.Invoke(ctx, WechatRpcService_Code2Token_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -59,8 +59,8 @@ func (c *wechatRpcServiceClient) Code2Token(ctx context.Context, in *WebCodeReq,
 	return out, nil
 }
 
-func (c *wechatRpcServiceClient) RefreshUserToken(ctx context.Context, in *WebRefreshReq, opts ...grpc.CallOption) (*WebRefreshResp, error) {
-	out := new(WebRefreshResp)
+func (c *wechatRpcServiceClient) RefreshUserToken(ctx context.Context, in *RefreshReq, opts ...grpc.CallOption) (*RefreshResp, error) {
+	out := new(RefreshResp)
 	err := c.cc.Invoke(ctx, WechatRpcService_RefreshUserToken_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -68,8 +68,8 @@ func (c *wechatRpcServiceClient) RefreshUserToken(ctx context.Context, in *WebRe
 	return out, nil
 }
 
-func (c *wechatRpcServiceClient) UserToken2UserInfo(ctx context.Context, in *WebTokenReq, opts ...grpc.CallOption) (*WebUserInfoResp, error) {
-	out := new(WebUserInfoResp)
+func (c *wechatRpcServiceClient) UserToken2UserInfo(ctx context.Context, in *TokenReq, opts ...grpc.CallOption) (*UserInfoResp, error) {
+	out := new(UserInfoResp)
 	err := c.cc.Invoke(ctx, WechatRpcService_UserToken2UserInfo_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -109,9 +109,9 @@ func (c *wechatRpcServiceClient) OfficialAccountAccessToken(ctx context.Context,
 // for forward compatibility
 type WechatRpcServiceServer interface {
 	// note: common
-	Code2Token(context.Context, *WebCodeReq) (*WebCodeResp, error)
-	RefreshUserToken(context.Context, *WebRefreshReq) (*WebRefreshResp, error)
-	UserToken2UserInfo(context.Context, *WebTokenReq) (*WebUserInfoResp, error)
+	Code2Token(context.Context, *CodeReq) (*CodeResp, error)
+	RefreshUserToken(context.Context, *RefreshReq) (*RefreshResp, error)
+	UserToken2UserInfo(context.Context, *TokenReq) (*UserInfoResp, error)
 	// note: web
 	WebRedirectWechat(context.Context, *WebRedirectReq) (*WebRedirectResp, error)
 	WebAutoRedirectWechat(context.Context, *WebAutoRedirectReq) (*WebAutoRedirectResp, error)
@@ -124,13 +124,13 @@ type WechatRpcServiceServer interface {
 type UnimplementedWechatRpcServiceServer struct {
 }
 
-func (UnimplementedWechatRpcServiceServer) Code2Token(context.Context, *WebCodeReq) (*WebCodeResp, error) {
+func (UnimplementedWechatRpcServiceServer) Code2Token(context.Context, *CodeReq) (*CodeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Code2Token not implemented")
 }
-func (UnimplementedWechatRpcServiceServer) RefreshUserToken(context.Context, *WebRefreshReq) (*WebRefreshResp, error) {
+func (UnimplementedWechatRpcServiceServer) RefreshUserToken(context.Context, *RefreshReq) (*RefreshResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshUserToken not implemented")
 }
-func (UnimplementedWechatRpcServiceServer) UserToken2UserInfo(context.Context, *WebTokenReq) (*WebUserInfoResp, error) {
+func (UnimplementedWechatRpcServiceServer) UserToken2UserInfo(context.Context, *TokenReq) (*UserInfoResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserToken2UserInfo not implemented")
 }
 func (UnimplementedWechatRpcServiceServer) WebRedirectWechat(context.Context, *WebRedirectReq) (*WebRedirectResp, error) {
@@ -156,7 +156,7 @@ func RegisterWechatRpcServiceServer(s grpc.ServiceRegistrar, srv WechatRpcServic
 }
 
 func _WechatRpcService_Code2Token_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WebCodeReq)
+	in := new(CodeReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -168,13 +168,13 @@ func _WechatRpcService_Code2Token_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: WechatRpcService_Code2Token_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WechatRpcServiceServer).Code2Token(ctx, req.(*WebCodeReq))
+		return srv.(WechatRpcServiceServer).Code2Token(ctx, req.(*CodeReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _WechatRpcService_RefreshUserToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WebRefreshReq)
+	in := new(RefreshReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -186,13 +186,13 @@ func _WechatRpcService_RefreshUserToken_Handler(srv interface{}, ctx context.Con
 		FullMethod: WechatRpcService_RefreshUserToken_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WechatRpcServiceServer).RefreshUserToken(ctx, req.(*WebRefreshReq))
+		return srv.(WechatRpcServiceServer).RefreshUserToken(ctx, req.(*RefreshReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _WechatRpcService_UserToken2UserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WebTokenReq)
+	in := new(TokenReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -204,7 +204,7 @@ func _WechatRpcService_UserToken2UserInfo_Handler(srv interface{}, ctx context.C
 		FullMethod: WechatRpcService_UserToken2UserInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WechatRpcServiceServer).UserToken2UserInfo(ctx, req.(*WebTokenReq))
+		return srv.(WechatRpcServiceServer).UserToken2UserInfo(ctx, req.(*TokenReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
