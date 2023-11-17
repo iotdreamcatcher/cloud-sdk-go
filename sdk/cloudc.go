@@ -188,3 +188,27 @@ func (c *Sdk) CloudCSystemConfigGetAll() (*cloudc.SystemConfigGetAllResp, error)
 	}
 	return res, nil
 }
+
+func (c *Sdk) CloudCPushConfigSet(in *cloudc.PushConfigSetParams) (*cloudc.ConfigResp, error) {
+	res, err := c.CloudC.PushConfigSet(c.SonyCtx(), in)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *Sdk) CloudCPushConfigGet(in *cloudc.ConfigGetParams) (*cloudc.PushConfigGetResp, error) {
+	res, err := c.CloudC.PushConfigGet(c.SonyCtx(), in)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *Sdk) CloudCPushConfigGetAll() (*cloudc.PushConfigGetAllResp, error) {
+	res, err := c.CloudC.PushConfigGetAll(c.SonyCtx(), &cloudc.ConfigGetAllParams{})
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}

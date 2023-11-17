@@ -19,6 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	CloudCService_PushConfigSet_FullMethodName       = "/cloudc.CloudCService/PushConfigSet"
+	CloudCService_PushConfigGet_FullMethodName       = "/cloudc.CloudCService/PushConfigGet"
+	CloudCService_PushConfigGetAll_FullMethodName    = "/cloudc.CloudCService/PushConfigGetAll"
 	CloudCService_SystemConfigSet_FullMethodName     = "/cloudc.CloudCService/SystemConfigSet"
 	CloudCService_SystemConfigGet_FullMethodName     = "/cloudc.CloudCService/SystemConfigGet"
 	CloudCService_SystemConfigGetAll_FullMethodName  = "/cloudc.CloudCService/SystemConfigGetAll"
@@ -46,6 +49,10 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CloudCServiceClient interface {
+	// note: 服务器系统配置
+	PushConfigSet(ctx context.Context, in *PushConfigSetParams, opts ...grpc.CallOption) (*ConfigResp, error)
+	PushConfigGet(ctx context.Context, in *ConfigGetParams, opts ...grpc.CallOption) (*PushConfigGetResp, error)
+	PushConfigGetAll(ctx context.Context, in *ConfigGetAllParams, opts ...grpc.CallOption) (*PushConfigGetAllResp, error)
 	// note: 服务器系统配置
 	SystemConfigSet(ctx context.Context, in *SystemConfigSetParams, opts ...grpc.CallOption) (*ConfigResp, error)
 	SystemConfigGet(ctx context.Context, in *ConfigGetParams, opts ...grpc.CallOption) (*SystemConfigGetResp, error)
@@ -83,6 +90,33 @@ type cloudCServiceClient struct {
 
 func NewCloudCServiceClient(cc grpc.ClientConnInterface) CloudCServiceClient {
 	return &cloudCServiceClient{cc}
+}
+
+func (c *cloudCServiceClient) PushConfigSet(ctx context.Context, in *PushConfigSetParams, opts ...grpc.CallOption) (*ConfigResp, error) {
+	out := new(ConfigResp)
+	err := c.cc.Invoke(ctx, CloudCService_PushConfigSet_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudCServiceClient) PushConfigGet(ctx context.Context, in *ConfigGetParams, opts ...grpc.CallOption) (*PushConfigGetResp, error) {
+	out := new(PushConfigGetResp)
+	err := c.cc.Invoke(ctx, CloudCService_PushConfigGet_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudCServiceClient) PushConfigGetAll(ctx context.Context, in *ConfigGetAllParams, opts ...grpc.CallOption) (*PushConfigGetAllResp, error) {
+	out := new(PushConfigGetAllResp)
+	err := c.cc.Invoke(ctx, CloudCService_PushConfigGetAll_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *cloudCServiceClient) SystemConfigSet(ctx context.Context, in *SystemConfigSetParams, opts ...grpc.CallOption) (*ConfigResp, error) {
@@ -279,6 +313,10 @@ func (c *cloudCServiceClient) OssConfigGetAll(ctx context.Context, in *ConfigGet
 // for forward compatibility
 type CloudCServiceServer interface {
 	// note: 服务器系统配置
+	PushConfigSet(context.Context, *PushConfigSetParams) (*ConfigResp, error)
+	PushConfigGet(context.Context, *ConfigGetParams) (*PushConfigGetResp, error)
+	PushConfigGetAll(context.Context, *ConfigGetAllParams) (*PushConfigGetAllResp, error)
+	// note: 服务器系统配置
 	SystemConfigSet(context.Context, *SystemConfigSetParams) (*ConfigResp, error)
 	SystemConfigGet(context.Context, *ConfigGetParams) (*SystemConfigGetResp, error)
 	SystemConfigGetAll(context.Context, *ConfigGetAllParams) (*SystemConfigGetAllResp, error)
@@ -314,6 +352,15 @@ type CloudCServiceServer interface {
 type UnimplementedCloudCServiceServer struct {
 }
 
+func (UnimplementedCloudCServiceServer) PushConfigSet(context.Context, *PushConfigSetParams) (*ConfigResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PushConfigSet not implemented")
+}
+func (UnimplementedCloudCServiceServer) PushConfigGet(context.Context, *ConfigGetParams) (*PushConfigGetResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PushConfigGet not implemented")
+}
+func (UnimplementedCloudCServiceServer) PushConfigGetAll(context.Context, *ConfigGetAllParams) (*PushConfigGetAllResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PushConfigGetAll not implemented")
+}
 func (UnimplementedCloudCServiceServer) SystemConfigSet(context.Context, *SystemConfigSetParams) (*ConfigResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SystemConfigSet not implemented")
 }
@@ -388,6 +435,60 @@ type UnsafeCloudCServiceServer interface {
 
 func RegisterCloudCServiceServer(s grpc.ServiceRegistrar, srv CloudCServiceServer) {
 	s.RegisterService(&CloudCService_ServiceDesc, srv)
+}
+
+func _CloudCService_PushConfigSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PushConfigSetParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudCServiceServer).PushConfigSet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CloudCService_PushConfigSet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudCServiceServer).PushConfigSet(ctx, req.(*PushConfigSetParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudCService_PushConfigGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfigGetParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudCServiceServer).PushConfigGet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CloudCService_PushConfigGet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudCServiceServer).PushConfigGet(ctx, req.(*ConfigGetParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudCService_PushConfigGetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfigGetAllParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudCServiceServer).PushConfigGetAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CloudCService_PushConfigGetAll_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudCServiceServer).PushConfigGetAll(ctx, req.(*ConfigGetAllParams))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _CloudCService_SystemConfigSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -775,6 +876,18 @@ var CloudCService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "cloudc.CloudCService",
 	HandlerType: (*CloudCServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "PushConfigSet",
+			Handler:    _CloudCService_PushConfigSet_Handler,
+		},
+		{
+			MethodName: "PushConfigGet",
+			Handler:    _CloudCService_PushConfigGet_Handler,
+		},
+		{
+			MethodName: "PushConfigGetAll",
+			Handler:    _CloudCService_PushConfigGetAll_Handler,
+		},
 		{
 			MethodName: "SystemConfigSet",
 			Handler:    _CloudCService_SystemConfigSet_Handler,

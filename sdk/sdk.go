@@ -29,6 +29,7 @@ type Sdk struct {
 	Sms                 *Sms
 	Wechat              *Wechat
 	Captcha             *Captcha
+	Push                *Push
 }
 
 func NewSdk() *Sdk {
