@@ -23,8 +23,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PushRpcServiceClient interface {
 	IosPush(ctx context.Context, in *IosPushReq, opts ...grpc.CallOption) (*PushResp, error)
-	HuaweiPush(ctx context.Context, in *HuaweiPushReq, opts ...grpc.CallOption) (*PushResp, error)
-	XiaomiPush(ctx context.Context, in *XiaomiPushReq, opts ...grpc.CallOption) (*PushResp, error)
+	HuaweiPush(ctx context.Context, in *AndroidPushReq, opts ...grpc.CallOption) (*PushResp, error)
+	XiaomiPush(ctx context.Context, in *AndroidPushReq, opts ...grpc.CallOption) (*PushResp, error)
 }
 
 type pushRpcServiceClient struct {
@@ -44,7 +44,7 @@ func (c *pushRpcServiceClient) IosPush(ctx context.Context, in *IosPushReq, opts
 	return out, nil
 }
 
-func (c *pushRpcServiceClient) HuaweiPush(ctx context.Context, in *HuaweiPushReq, opts ...grpc.CallOption) (*PushResp, error) {
+func (c *pushRpcServiceClient) HuaweiPush(ctx context.Context, in *AndroidPushReq, opts ...grpc.CallOption) (*PushResp, error) {
 	out := new(PushResp)
 	err := c.cc.Invoke(ctx, "/push.PushRpcService/HuaweiPush", in, out, opts...)
 	if err != nil {
@@ -53,7 +53,7 @@ func (c *pushRpcServiceClient) HuaweiPush(ctx context.Context, in *HuaweiPushReq
 	return out, nil
 }
 
-func (c *pushRpcServiceClient) XiaomiPush(ctx context.Context, in *XiaomiPushReq, opts ...grpc.CallOption) (*PushResp, error) {
+func (c *pushRpcServiceClient) XiaomiPush(ctx context.Context, in *AndroidPushReq, opts ...grpc.CallOption) (*PushResp, error) {
 	out := new(PushResp)
 	err := c.cc.Invoke(ctx, "/push.PushRpcService/XiaomiPush", in, out, opts...)
 	if err != nil {
@@ -67,8 +67,8 @@ func (c *pushRpcServiceClient) XiaomiPush(ctx context.Context, in *XiaomiPushReq
 // for forward compatibility
 type PushRpcServiceServer interface {
 	IosPush(context.Context, *IosPushReq) (*PushResp, error)
-	HuaweiPush(context.Context, *HuaweiPushReq) (*PushResp, error)
-	XiaomiPush(context.Context, *XiaomiPushReq) (*PushResp, error)
+	HuaweiPush(context.Context, *AndroidPushReq) (*PushResp, error)
+	XiaomiPush(context.Context, *AndroidPushReq) (*PushResp, error)
 	mustEmbedUnimplementedPushRpcServiceServer()
 }
 
@@ -79,10 +79,10 @@ type UnimplementedPushRpcServiceServer struct {
 func (UnimplementedPushRpcServiceServer) IosPush(context.Context, *IosPushReq) (*PushResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IosPush not implemented")
 }
-func (UnimplementedPushRpcServiceServer) HuaweiPush(context.Context, *HuaweiPushReq) (*PushResp, error) {
+func (UnimplementedPushRpcServiceServer) HuaweiPush(context.Context, *AndroidPushReq) (*PushResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HuaweiPush not implemented")
 }
-func (UnimplementedPushRpcServiceServer) XiaomiPush(context.Context, *XiaomiPushReq) (*PushResp, error) {
+func (UnimplementedPushRpcServiceServer) XiaomiPush(context.Context, *AndroidPushReq) (*PushResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method XiaomiPush not implemented")
 }
 func (UnimplementedPushRpcServiceServer) mustEmbedUnimplementedPushRpcServiceServer() {}
@@ -117,7 +117,7 @@ func _PushRpcService_IosPush_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _PushRpcService_HuaweiPush_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HuaweiPushReq)
+	in := new(AndroidPushReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -129,13 +129,13 @@ func _PushRpcService_HuaweiPush_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/push.PushRpcService/HuaweiPush",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PushRpcServiceServer).HuaweiPush(ctx, req.(*HuaweiPushReq))
+		return srv.(PushRpcServiceServer).HuaweiPush(ctx, req.(*AndroidPushReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _PushRpcService_XiaomiPush_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(XiaomiPushReq)
+	in := new(AndroidPushReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -147,7 +147,7 @@ func _PushRpcService_XiaomiPush_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/push.PushRpcService/XiaomiPush",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PushRpcServiceServer).XiaomiPush(ctx, req.(*XiaomiPushReq))
+		return srv.(PushRpcServiceServer).XiaomiPush(ctx, req.(*AndroidPushReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }

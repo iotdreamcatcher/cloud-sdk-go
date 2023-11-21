@@ -53,7 +53,7 @@ func (c *Sdk) PushIosPush(in *push.IosPushReq) (*push.PushResp, error) {
 	return res, nil
 }
 
-func (c *Sdk) PushHuaweiPush(in *push.HuaweiPushReq) (*push.PushResp, error) {
+func (c *Sdk) PushHuaweiPush(in *push.AndroidPushReq) (*push.PushResp, error) {
 	res, err := c.Push.HuaweiPush(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
@@ -61,7 +61,7 @@ func (c *Sdk) PushHuaweiPush(in *push.HuaweiPushReq) (*push.PushResp, error) {
 	return res, nil
 }
 
-func (c *Sdk) PushXiaomiPush(in *push.XiaomiPushReq) (*push.PushResp, error) {
+func (c *Sdk) PushXiaomiPush(in *push.AndroidPushReq) (*push.PushResp, error) {
 	res, err := c.Push.XiaomiPush(c.SonyCtx(), in)
 	if err != nil {
 		return nil, err
