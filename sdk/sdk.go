@@ -19,6 +19,7 @@ type Sdk struct {
 	RefreshToken        string
 	RefreshTokenExpires int64
 	RetryTimes          int
+	Deadline            int64
 	Context             context.Context
 	Auth                *Auth
 	Article             *Article
@@ -30,12 +31,14 @@ type Sdk struct {
 	Wechat              *Wechat
 	Captcha             *Captcha
 	Push                *Push
+	IotHome             *IotHome
 }
 
 func NewSdk() *Sdk {
 	return &Sdk{
-		Status:  types.STATUS_NOT_READY,
-		Context: context.Background(),
+		Status:   types.STATUS_NOT_READY,
+		Context:  context.Background(),
+		Deadline: 300,
 	}
 }
 
@@ -123,13 +126,12 @@ func (c *Sdk) AuthRefresh() (*Sdk, error) {
 		return nil, types.ErrNotReady
 	}
 
-	// note: 判断accesstoken过期了没
-	if c.AccessTokenExpires >= time.Now().Unix() {
+	// note: 判断accessToken过期了没
+	if (c.AccessTokenExpires - c.Deadline) >= time.Now().Unix() {
 		// note: 没过期，直接返回
 		return c, nil
 	}
-
-	if c.RefreshTokenExpires >= time.Now().Unix() {
+	if (c.RefreshTokenExpires - c.Deadline) >= time.Now().Unix() {
 		// note: refreshToken没过期，但是accessToken过期了
 		res, err := c.Auth.RequestRefresh(c.Config.AccessKeyId, c.RefreshToken)
 		if err != nil {
