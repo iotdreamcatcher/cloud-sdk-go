@@ -31,7 +31,7 @@ type Sdk struct {
 	Wechat              *Wechat
 	Captcha             *Captcha
 	Push                *Push
-	IotHome             *IotHome
+	Iot                 *Iot
 }
 
 func NewSdk() *Sdk {
@@ -44,6 +44,11 @@ func NewSdk() *Sdk {
 
 func (c *Sdk) WithConfig(config *Config) *Sdk {
 	c.Config = config
+	return c
+}
+
+func (c *Sdk) WithDeadline(Deadline int64) *Sdk {
+	c.Deadline = Deadline
 	return c
 }
 

@@ -19,274 +19,829 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	IotHomeService_Create_FullMethodName    = "/iot.IotHomeService/Create"
-	IotHomeService_Update_FullMethodName    = "/iot.IotHomeService/Update"
-	IotHomeService_Delete_FullMethodName    = "/iot.IotHomeService/Delete"
-	IotHomeService_DeleteIds_FullMethodName = "/iot.IotHomeService/DeleteIds"
-	IotHomeService_Query_FullMethodName     = "/iot.IotHomeService/Query"
-	IotHomeService_QueryList_FullMethodName = "/iot.IotHomeService/QueryList"
+	IotService_HomeCreate_FullMethodName         = "/iot.IotService/HomeCreate"
+	IotService_HomeUpdate_FullMethodName         = "/iot.IotService/HomeUpdate"
+	IotService_HomeDelete_FullMethodName         = "/iot.IotService/HomeDelete"
+	IotService_HomeDeleteIds_FullMethodName      = "/iot.IotService/HomeDeleteIds"
+	IotService_HomeQuery_FullMethodName          = "/iot.IotService/HomeQuery"
+	IotService_HomeQueryList_FullMethodName      = "/iot.IotService/HomeQueryList"
+	IotService_HomeUpdateStatus_FullMethodName   = "/iot.IotService/HomeUpdateStatus"
+	IotService_MemberCreate_FullMethodName       = "/iot.IotService/MemberCreate"
+	IotService_MemberUpdate_FullMethodName       = "/iot.IotService/MemberUpdate"
+	IotService_MemberDelete_FullMethodName       = "/iot.IotService/MemberDelete"
+	IotService_MemberDeleteIds_FullMethodName    = "/iot.IotService/MemberDeleteIds"
+	IotService_MemberQuery_FullMethodName        = "/iot.IotService/MemberQuery"
+	IotService_MemberQueryList_FullMethodName    = "/iot.IotService/MemberQueryList"
+	IotService_MemberUpdateStatus_FullMethodName = "/iot.IotService/MemberUpdateStatus"
+	IotService_RoomCreate_FullMethodName         = "/iot.IotService/RoomCreate"
+	IotService_RoomUpdate_FullMethodName         = "/iot.IotService/RoomUpdate"
+	IotService_RoomDelete_FullMethodName         = "/iot.IotService/RoomDelete"
+	IotService_RoomDeleteIds_FullMethodName      = "/iot.IotService/RoomDeleteIds"
+	IotService_RoomQuery_FullMethodName          = "/iot.IotService/RoomQuery"
+	IotService_RoomQueryList_FullMethodName      = "/iot.IotService/RoomQueryList"
+	IotService_RoomUpdateStatus_FullMethodName   = "/iot.IotService/RoomUpdateStatus"
 )
 
-// IotHomeServiceClient is the client API for IotHomeService service.
+// IotServiceClient is the client API for IotService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type IotHomeServiceClient interface {
-	Create(ctx context.Context, in *CreateHomeReq, opts ...grpc.CallOption) (*CreateResp, error)
-	Update(ctx context.Context, in *UpdateHomeReq, opts ...grpc.CallOption) (*Response, error)
-	Delete(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*Response, error)
-	DeleteIds(ctx context.Context, in *DeleteIdsReq, opts ...grpc.CallOption) (*Response, error)
-	Query(ctx context.Context, in *QueryReq, opts ...grpc.CallOption) (*QueryResp, error)
-	QueryList(ctx context.Context, in *QueryListReq, opts ...grpc.CallOption) (*QueryListResp, error)
+type IotServiceClient interface {
+	HomeCreate(ctx context.Context, in *CreateHomeReq, opts ...grpc.CallOption) (*Response, error)
+	HomeUpdate(ctx context.Context, in *UpdateHomeReq, opts ...grpc.CallOption) (*Response, error)
+	HomeDelete(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*Response, error)
+	HomeDeleteIds(ctx context.Context, in *DeleteIdsReq, opts ...grpc.CallOption) (*Response, error)
+	HomeQuery(ctx context.Context, in *QueryReq, opts ...grpc.CallOption) (*QueryHomeResp, error)
+	HomeQueryList(ctx context.Context, in *QueryHomeListReq, opts ...grpc.CallOption) (*QueryHomeListResp, error)
+	HomeUpdateStatus(ctx context.Context, in *UpdateStatusReq, opts ...grpc.CallOption) (*Response, error)
+	MemberCreate(ctx context.Context, in *CreateMemberReq, opts ...grpc.CallOption) (*Response, error)
+	MemberUpdate(ctx context.Context, in *UpdateMemberReq, opts ...grpc.CallOption) (*Response, error)
+	MemberDelete(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*Response, error)
+	MemberDeleteIds(ctx context.Context, in *DeleteIdsReq, opts ...grpc.CallOption) (*Response, error)
+	MemberQuery(ctx context.Context, in *QueryReq, opts ...grpc.CallOption) (*QueryMemberResp, error)
+	MemberQueryList(ctx context.Context, in *QueryMemberListReq, opts ...grpc.CallOption) (*QueryMemberListResp, error)
+	MemberUpdateStatus(ctx context.Context, in *UpdateStatusReq, opts ...grpc.CallOption) (*Response, error)
+	RoomCreate(ctx context.Context, in *CreateRoomReq, opts ...grpc.CallOption) (*Response, error)
+	RoomUpdate(ctx context.Context, in *UpdateRoomReq, opts ...grpc.CallOption) (*Response, error)
+	RoomDelete(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*Response, error)
+	RoomDeleteIds(ctx context.Context, in *DeleteIdsReq, opts ...grpc.CallOption) (*Response, error)
+	RoomQuery(ctx context.Context, in *QueryReq, opts ...grpc.CallOption) (*QueryRoomResp, error)
+	RoomQueryList(ctx context.Context, in *QueryRoomListReq, opts ...grpc.CallOption) (*QueryRoomListResp, error)
+	RoomUpdateStatus(ctx context.Context, in *UpdateStatusReq, opts ...grpc.CallOption) (*Response, error)
 }
 
-type iotHomeServiceClient struct {
+type iotServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewIotHomeServiceClient(cc grpc.ClientConnInterface) IotHomeServiceClient {
-	return &iotHomeServiceClient{cc}
+func NewIotServiceClient(cc grpc.ClientConnInterface) IotServiceClient {
+	return &iotServiceClient{cc}
 }
 
-func (c *iotHomeServiceClient) Create(ctx context.Context, in *CreateHomeReq, opts ...grpc.CallOption) (*CreateResp, error) {
-	out := new(CreateResp)
-	err := c.cc.Invoke(ctx, IotHomeService_Create_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *iotHomeServiceClient) Update(ctx context.Context, in *UpdateHomeReq, opts ...grpc.CallOption) (*Response, error) {
+func (c *iotServiceClient) HomeCreate(ctx context.Context, in *CreateHomeReq, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, IotHomeService_Update_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, IotService_HomeCreate_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *iotHomeServiceClient) Delete(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*Response, error) {
+func (c *iotServiceClient) HomeUpdate(ctx context.Context, in *UpdateHomeReq, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, IotHomeService_Delete_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, IotService_HomeUpdate_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *iotHomeServiceClient) DeleteIds(ctx context.Context, in *DeleteIdsReq, opts ...grpc.CallOption) (*Response, error) {
+func (c *iotServiceClient) HomeDelete(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*Response, error) {
 	out := new(Response)
-	err := c.cc.Invoke(ctx, IotHomeService_DeleteIds_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, IotService_HomeDelete_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *iotHomeServiceClient) Query(ctx context.Context, in *QueryReq, opts ...grpc.CallOption) (*QueryResp, error) {
-	out := new(QueryResp)
-	err := c.cc.Invoke(ctx, IotHomeService_Query_FullMethodName, in, out, opts...)
+func (c *iotServiceClient) HomeDeleteIds(ctx context.Context, in *DeleteIdsReq, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, IotService_HomeDeleteIds_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *iotHomeServiceClient) QueryList(ctx context.Context, in *QueryListReq, opts ...grpc.CallOption) (*QueryListResp, error) {
-	out := new(QueryListResp)
-	err := c.cc.Invoke(ctx, IotHomeService_QueryList_FullMethodName, in, out, opts...)
+func (c *iotServiceClient) HomeQuery(ctx context.Context, in *QueryReq, opts ...grpc.CallOption) (*QueryHomeResp, error) {
+	out := new(QueryHomeResp)
+	err := c.cc.Invoke(ctx, IotService_HomeQuery_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// IotHomeServiceServer is the server API for IotHomeService service.
-// All implementations must embed UnimplementedIotHomeServiceServer
+func (c *iotServiceClient) HomeQueryList(ctx context.Context, in *QueryHomeListReq, opts ...grpc.CallOption) (*QueryHomeListResp, error) {
+	out := new(QueryHomeListResp)
+	err := c.cc.Invoke(ctx, IotService_HomeQueryList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) HomeUpdateStatus(ctx context.Context, in *UpdateStatusReq, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, IotService_HomeUpdateStatus_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) MemberCreate(ctx context.Context, in *CreateMemberReq, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, IotService_MemberCreate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) MemberUpdate(ctx context.Context, in *UpdateMemberReq, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, IotService_MemberUpdate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) MemberDelete(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, IotService_MemberDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) MemberDeleteIds(ctx context.Context, in *DeleteIdsReq, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, IotService_MemberDeleteIds_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) MemberQuery(ctx context.Context, in *QueryReq, opts ...grpc.CallOption) (*QueryMemberResp, error) {
+	out := new(QueryMemberResp)
+	err := c.cc.Invoke(ctx, IotService_MemberQuery_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) MemberQueryList(ctx context.Context, in *QueryMemberListReq, opts ...grpc.CallOption) (*QueryMemberListResp, error) {
+	out := new(QueryMemberListResp)
+	err := c.cc.Invoke(ctx, IotService_MemberQueryList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) MemberUpdateStatus(ctx context.Context, in *UpdateStatusReq, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, IotService_MemberUpdateStatus_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) RoomCreate(ctx context.Context, in *CreateRoomReq, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, IotService_RoomCreate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) RoomUpdate(ctx context.Context, in *UpdateRoomReq, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, IotService_RoomUpdate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) RoomDelete(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, IotService_RoomDelete_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) RoomDeleteIds(ctx context.Context, in *DeleteIdsReq, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, IotService_RoomDeleteIds_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) RoomQuery(ctx context.Context, in *QueryReq, opts ...grpc.CallOption) (*QueryRoomResp, error) {
+	out := new(QueryRoomResp)
+	err := c.cc.Invoke(ctx, IotService_RoomQuery_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) RoomQueryList(ctx context.Context, in *QueryRoomListReq, opts ...grpc.CallOption) (*QueryRoomListResp, error) {
+	out := new(QueryRoomListResp)
+	err := c.cc.Invoke(ctx, IotService_RoomQueryList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iotServiceClient) RoomUpdateStatus(ctx context.Context, in *UpdateStatusReq, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, IotService_RoomUpdateStatus_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// IotServiceServer is the server API for IotService service.
+// All implementations must embed UnimplementedIotServiceServer
 // for forward compatibility
-type IotHomeServiceServer interface {
-	Create(context.Context, *CreateHomeReq) (*CreateResp, error)
-	Update(context.Context, *UpdateHomeReq) (*Response, error)
-	Delete(context.Context, *DeleteReq) (*Response, error)
-	DeleteIds(context.Context, *DeleteIdsReq) (*Response, error)
-	Query(context.Context, *QueryReq) (*QueryResp, error)
-	QueryList(context.Context, *QueryListReq) (*QueryListResp, error)
-	mustEmbedUnimplementedIotHomeServiceServer()
+type IotServiceServer interface {
+	HomeCreate(context.Context, *CreateHomeReq) (*Response, error)
+	HomeUpdate(context.Context, *UpdateHomeReq) (*Response, error)
+	HomeDelete(context.Context, *DeleteReq) (*Response, error)
+	HomeDeleteIds(context.Context, *DeleteIdsReq) (*Response, error)
+	HomeQuery(context.Context, *QueryReq) (*QueryHomeResp, error)
+	HomeQueryList(context.Context, *QueryHomeListReq) (*QueryHomeListResp, error)
+	HomeUpdateStatus(context.Context, *UpdateStatusReq) (*Response, error)
+	MemberCreate(context.Context, *CreateMemberReq) (*Response, error)
+	MemberUpdate(context.Context, *UpdateMemberReq) (*Response, error)
+	MemberDelete(context.Context, *DeleteReq) (*Response, error)
+	MemberDeleteIds(context.Context, *DeleteIdsReq) (*Response, error)
+	MemberQuery(context.Context, *QueryReq) (*QueryMemberResp, error)
+	MemberQueryList(context.Context, *QueryMemberListReq) (*QueryMemberListResp, error)
+	MemberUpdateStatus(context.Context, *UpdateStatusReq) (*Response, error)
+	RoomCreate(context.Context, *CreateRoomReq) (*Response, error)
+	RoomUpdate(context.Context, *UpdateRoomReq) (*Response, error)
+	RoomDelete(context.Context, *DeleteReq) (*Response, error)
+	RoomDeleteIds(context.Context, *DeleteIdsReq) (*Response, error)
+	RoomQuery(context.Context, *QueryReq) (*QueryRoomResp, error)
+	RoomQueryList(context.Context, *QueryRoomListReq) (*QueryRoomListResp, error)
+	RoomUpdateStatus(context.Context, *UpdateStatusReq) (*Response, error)
+	mustEmbedUnimplementedIotServiceServer()
 }
 
-// UnimplementedIotHomeServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedIotHomeServiceServer struct {
+// UnimplementedIotServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedIotServiceServer struct {
 }
 
-func (UnimplementedIotHomeServiceServer) Create(context.Context, *CreateHomeReq) (*CreateResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+func (UnimplementedIotServiceServer) HomeCreate(context.Context, *CreateHomeReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HomeCreate not implemented")
 }
-func (UnimplementedIotHomeServiceServer) Update(context.Context, *UpdateHomeReq) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+func (UnimplementedIotServiceServer) HomeUpdate(context.Context, *UpdateHomeReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HomeUpdate not implemented")
 }
-func (UnimplementedIotHomeServiceServer) Delete(context.Context, *DeleteReq) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+func (UnimplementedIotServiceServer) HomeDelete(context.Context, *DeleteReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HomeDelete not implemented")
 }
-func (UnimplementedIotHomeServiceServer) DeleteIds(context.Context, *DeleteIdsReq) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteIds not implemented")
+func (UnimplementedIotServiceServer) HomeDeleteIds(context.Context, *DeleteIdsReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HomeDeleteIds not implemented")
 }
-func (UnimplementedIotHomeServiceServer) Query(context.Context, *QueryReq) (*QueryResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
+func (UnimplementedIotServiceServer) HomeQuery(context.Context, *QueryReq) (*QueryHomeResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HomeQuery not implemented")
 }
-func (UnimplementedIotHomeServiceServer) QueryList(context.Context, *QueryListReq) (*QueryListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method QueryList not implemented")
+func (UnimplementedIotServiceServer) HomeQueryList(context.Context, *QueryHomeListReq) (*QueryHomeListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HomeQueryList not implemented")
 }
-func (UnimplementedIotHomeServiceServer) mustEmbedUnimplementedIotHomeServiceServer() {}
+func (UnimplementedIotServiceServer) HomeUpdateStatus(context.Context, *UpdateStatusReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HomeUpdateStatus not implemented")
+}
+func (UnimplementedIotServiceServer) MemberCreate(context.Context, *CreateMemberReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberCreate not implemented")
+}
+func (UnimplementedIotServiceServer) MemberUpdate(context.Context, *UpdateMemberReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberUpdate not implemented")
+}
+func (UnimplementedIotServiceServer) MemberDelete(context.Context, *DeleteReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberDelete not implemented")
+}
+func (UnimplementedIotServiceServer) MemberDeleteIds(context.Context, *DeleteIdsReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberDeleteIds not implemented")
+}
+func (UnimplementedIotServiceServer) MemberQuery(context.Context, *QueryReq) (*QueryMemberResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberQuery not implemented")
+}
+func (UnimplementedIotServiceServer) MemberQueryList(context.Context, *QueryMemberListReq) (*QueryMemberListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberQueryList not implemented")
+}
+func (UnimplementedIotServiceServer) MemberUpdateStatus(context.Context, *UpdateStatusReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MemberUpdateStatus not implemented")
+}
+func (UnimplementedIotServiceServer) RoomCreate(context.Context, *CreateRoomReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoomCreate not implemented")
+}
+func (UnimplementedIotServiceServer) RoomUpdate(context.Context, *UpdateRoomReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoomUpdate not implemented")
+}
+func (UnimplementedIotServiceServer) RoomDelete(context.Context, *DeleteReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoomDelete not implemented")
+}
+func (UnimplementedIotServiceServer) RoomDeleteIds(context.Context, *DeleteIdsReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoomDeleteIds not implemented")
+}
+func (UnimplementedIotServiceServer) RoomQuery(context.Context, *QueryReq) (*QueryRoomResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoomQuery not implemented")
+}
+func (UnimplementedIotServiceServer) RoomQueryList(context.Context, *QueryRoomListReq) (*QueryRoomListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoomQueryList not implemented")
+}
+func (UnimplementedIotServiceServer) RoomUpdateStatus(context.Context, *UpdateStatusReq) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoomUpdateStatus not implemented")
+}
+func (UnimplementedIotServiceServer) mustEmbedUnimplementedIotServiceServer() {}
 
-// UnsafeIotHomeServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to IotHomeServiceServer will
+// UnsafeIotServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to IotServiceServer will
 // result in compilation errors.
-type UnsafeIotHomeServiceServer interface {
-	mustEmbedUnimplementedIotHomeServiceServer()
+type UnsafeIotServiceServer interface {
+	mustEmbedUnimplementedIotServiceServer()
 }
 
-func RegisterIotHomeServiceServer(s grpc.ServiceRegistrar, srv IotHomeServiceServer) {
-	s.RegisterService(&IotHomeService_ServiceDesc, srv)
+func RegisterIotServiceServer(s grpc.ServiceRegistrar, srv IotServiceServer) {
+	s.RegisterService(&IotService_ServiceDesc, srv)
 }
 
-func _IotHomeService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _IotService_HomeCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateHomeReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(IotHomeServiceServer).Create(ctx, in)
+		return srv.(IotServiceServer).HomeCreate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: IotHomeService_Create_FullMethodName,
+		FullMethod: IotService_HomeCreate_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IotHomeServiceServer).Create(ctx, req.(*CreateHomeReq))
+		return srv.(IotServiceServer).HomeCreate(ctx, req.(*CreateHomeReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _IotHomeService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _IotService_HomeUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateHomeReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(IotHomeServiceServer).Update(ctx, in)
+		return srv.(IotServiceServer).HomeUpdate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: IotHomeService_Update_FullMethodName,
+		FullMethod: IotService_HomeUpdate_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IotHomeServiceServer).Update(ctx, req.(*UpdateHomeReq))
+		return srv.(IotServiceServer).HomeUpdate(ctx, req.(*UpdateHomeReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _IotHomeService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _IotService_HomeDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(IotHomeServiceServer).Delete(ctx, in)
+		return srv.(IotServiceServer).HomeDelete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: IotHomeService_Delete_FullMethodName,
+		FullMethod: IotService_HomeDelete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IotHomeServiceServer).Delete(ctx, req.(*DeleteReq))
+		return srv.(IotServiceServer).HomeDelete(ctx, req.(*DeleteReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _IotHomeService_DeleteIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _IotService_HomeDeleteIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteIdsReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(IotHomeServiceServer).DeleteIds(ctx, in)
+		return srv.(IotServiceServer).HomeDeleteIds(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: IotHomeService_DeleteIds_FullMethodName,
+		FullMethod: IotService_HomeDeleteIds_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IotHomeServiceServer).DeleteIds(ctx, req.(*DeleteIdsReq))
+		return srv.(IotServiceServer).HomeDeleteIds(ctx, req.(*DeleteIdsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _IotHomeService_Query_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _IotService_HomeQuery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(QueryReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(IotHomeServiceServer).Query(ctx, in)
+		return srv.(IotServiceServer).HomeQuery(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: IotHomeService_Query_FullMethodName,
+		FullMethod: IotService_HomeQuery_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IotHomeServiceServer).Query(ctx, req.(*QueryReq))
+		return srv.(IotServiceServer).HomeQuery(ctx, req.(*QueryReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _IotHomeService_QueryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryListReq)
+func _IotService_HomeQueryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryHomeListReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(IotHomeServiceServer).QueryList(ctx, in)
+		return srv.(IotServiceServer).HomeQueryList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: IotHomeService_QueryList_FullMethodName,
+		FullMethod: IotService_HomeQueryList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IotHomeServiceServer).QueryList(ctx, req.(*QueryListReq))
+		return srv.(IotServiceServer).HomeQueryList(ctx, req.(*QueryHomeListReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// IotHomeService_ServiceDesc is the grpc.ServiceDesc for IotHomeService service.
+func _IotService_HomeUpdateStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateStatusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).HomeUpdateStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_HomeUpdateStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).HomeUpdateStatus(ctx, req.(*UpdateStatusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_MemberCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateMemberReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).MemberCreate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_MemberCreate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).MemberCreate(ctx, req.(*CreateMemberReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_MemberUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateMemberReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).MemberUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_MemberUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).MemberUpdate(ctx, req.(*UpdateMemberReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_MemberDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).MemberDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_MemberDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).MemberDelete(ctx, req.(*DeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_MemberDeleteIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteIdsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).MemberDeleteIds(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_MemberDeleteIds_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).MemberDeleteIds(ctx, req.(*DeleteIdsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_MemberQuery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).MemberQuery(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_MemberQuery_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).MemberQuery(ctx, req.(*QueryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_MemberQueryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryMemberListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).MemberQueryList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_MemberQueryList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).MemberQueryList(ctx, req.(*QueryMemberListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_MemberUpdateStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateStatusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).MemberUpdateStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_MemberUpdateStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).MemberUpdateStatus(ctx, req.(*UpdateStatusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_RoomCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRoomReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).RoomCreate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_RoomCreate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).RoomCreate(ctx, req.(*CreateRoomReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_RoomUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRoomReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).RoomUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_RoomUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).RoomUpdate(ctx, req.(*UpdateRoomReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_RoomDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).RoomDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_RoomDelete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).RoomDelete(ctx, req.(*DeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_RoomDeleteIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteIdsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).RoomDeleteIds(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_RoomDeleteIds_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).RoomDeleteIds(ctx, req.(*DeleteIdsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_RoomQuery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).RoomQuery(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_RoomQuery_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).RoomQuery(ctx, req.(*QueryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_RoomQueryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryRoomListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).RoomQueryList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_RoomQueryList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).RoomQueryList(ctx, req.(*QueryRoomListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IotService_RoomUpdateStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateStatusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IotServiceServer).RoomUpdateStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IotService_RoomUpdateStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IotServiceServer).RoomUpdateStatus(ctx, req.(*UpdateStatusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// IotService_ServiceDesc is the grpc.ServiceDesc for IotService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var IotHomeService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "iot.IotHomeService",
-	HandlerType: (*IotHomeServiceServer)(nil),
+var IotService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "iot.IotService",
+	HandlerType: (*IotServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Create",
-			Handler:    _IotHomeService_Create_Handler,
+			MethodName: "HomeCreate",
+			Handler:    _IotService_HomeCreate_Handler,
 		},
 		{
-			MethodName: "Update",
-			Handler:    _IotHomeService_Update_Handler,
+			MethodName: "HomeUpdate",
+			Handler:    _IotService_HomeUpdate_Handler,
 		},
 		{
-			MethodName: "Delete",
-			Handler:    _IotHomeService_Delete_Handler,
+			MethodName: "HomeDelete",
+			Handler:    _IotService_HomeDelete_Handler,
 		},
 		{
-			MethodName: "DeleteIds",
-			Handler:    _IotHomeService_DeleteIds_Handler,
+			MethodName: "HomeDeleteIds",
+			Handler:    _IotService_HomeDeleteIds_Handler,
 		},
 		{
-			MethodName: "Query",
-			Handler:    _IotHomeService_Query_Handler,
+			MethodName: "HomeQuery",
+			Handler:    _IotService_HomeQuery_Handler,
 		},
 		{
-			MethodName: "QueryList",
-			Handler:    _IotHomeService_QueryList_Handler,
+			MethodName: "HomeQueryList",
+			Handler:    _IotService_HomeQueryList_Handler,
+		},
+		{
+			MethodName: "HomeUpdateStatus",
+			Handler:    _IotService_HomeUpdateStatus_Handler,
+		},
+		{
+			MethodName: "MemberCreate",
+			Handler:    _IotService_MemberCreate_Handler,
+		},
+		{
+			MethodName: "MemberUpdate",
+			Handler:    _IotService_MemberUpdate_Handler,
+		},
+		{
+			MethodName: "MemberDelete",
+			Handler:    _IotService_MemberDelete_Handler,
+		},
+		{
+			MethodName: "MemberDeleteIds",
+			Handler:    _IotService_MemberDeleteIds_Handler,
+		},
+		{
+			MethodName: "MemberQuery",
+			Handler:    _IotService_MemberQuery_Handler,
+		},
+		{
+			MethodName: "MemberQueryList",
+			Handler:    _IotService_MemberQueryList_Handler,
+		},
+		{
+			MethodName: "MemberUpdateStatus",
+			Handler:    _IotService_MemberUpdateStatus_Handler,
+		},
+		{
+			MethodName: "RoomCreate",
+			Handler:    _IotService_RoomCreate_Handler,
+		},
+		{
+			MethodName: "RoomUpdate",
+			Handler:    _IotService_RoomUpdate_Handler,
+		},
+		{
+			MethodName: "RoomDelete",
+			Handler:    _IotService_RoomDelete_Handler,
+		},
+		{
+			MethodName: "RoomDeleteIds",
+			Handler:    _IotService_RoomDeleteIds_Handler,
+		},
+		{
+			MethodName: "RoomQuery",
+			Handler:    _IotService_RoomQuery_Handler,
+		},
+		{
+			MethodName: "RoomQueryList",
+			Handler:    _IotService_RoomQueryList_Handler,
+		},
+		{
+			MethodName: "RoomUpdateStatus",
+			Handler:    _IotService_RoomUpdateStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
