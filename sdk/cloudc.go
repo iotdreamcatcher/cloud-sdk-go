@@ -212,3 +212,27 @@ func (c *Sdk) CloudCPushConfigGetAll() (*cloudc.PushConfigGetAllResp, error) {
 	}
 	return res, nil
 }
+
+func (c *Sdk) CloudCSlsConfigSet(in *cloudc.SlsConfigSetParams) (*cloudc.ConfigResp, error) {
+	res, err := c.CloudC.SlsConfigSet(c.SonyCtx(), in)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *Sdk) CloudCSlsConfigGet(in *cloudc.ConfigGetParams) (*cloudc.SlsConfigGetResp, error) {
+	res, err := c.CloudC.SlsConfigGet(c.SonyCtx(), in)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *Sdk) CloudCSlsConfigGetAll() (*cloudc.SlsConfigGetAllResp, error) {
+	res, err := c.CloudC.SlsConfigGetAll(c.SonyCtx(), &cloudc.ConfigGetAllParams{})
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}

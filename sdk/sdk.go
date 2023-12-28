@@ -32,6 +32,8 @@ type Sdk struct {
 	Captcha             *Captcha
 	Push                *Push
 	Iot                 *Iot
+	Sls                 *Sls
+	Syncer              *Syncer
 }
 
 func NewSdk() *Sdk {
