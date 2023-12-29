@@ -7,7 +7,7 @@ import (
 	"github.com/aliyun/aliyun-log-go-sdk/producer"
 	"github.com/iotdreamcatcher/cloud-sdk-go/pb/cloudc"
 	"github.com/iotdreamcatcher/cloud-sdk-go/sdk/types"
-	"github.com/iotdreamcatcher/cloud-sdk-go/third_party/response"
+	"github.com/iotdreamcatcher/third_party/response"
 	"github.com/zeromicro/go-zero/core/logx"
 	"google.golang.org/protobuf/proto"
 	"os"

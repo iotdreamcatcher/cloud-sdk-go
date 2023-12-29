@@ -3,13 +3,14 @@ module github.com/iotdreamcatcher/cloud-sdk-go
 go 1.19
 
 require (
+	github.com/aliyun/aliyun-log-go-sdk v0.1.68
+	github.com/iotdreamcatcher/third_party v0.0.4
 	github.com/zeromicro/go-zero v1.5.5
 	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.31.0
 )
 
 require (
-	github.com/aliyun/aliyun-log-go-sdk v0.1.68 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/cenkalti/backoff/v4 v4.2.0 // indirect
