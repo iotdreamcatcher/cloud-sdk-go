@@ -16,10 +16,10 @@ func main() {
 
 	s := sdk.NewSdk().WithConfig(sdk.DefaultConfig(AccessKeyId, AccessKeySecret, []string{Endpoint})).AutoAuth().InitCloudC().InitSms()
 
-	// note: 以下函数可以检查cloudc是否初始化成功，不调用也可以
+	// note: 以下函数可以检查短信模组是否初始化成功，不调用也可以
 	s = s.SmsCheckStatus()
 
-	result, err := s.SmsCheckStatus().SmsSendSms("xxxxxx", "xxxxx")
+	result, err := s.SmsCheckStatus().SmsSendSms("1333xxxx118", "123456")
 	if err != nil {
 		panic(err)
 	}

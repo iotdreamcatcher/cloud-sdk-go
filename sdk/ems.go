@@ -90,7 +90,7 @@ func (c *Sdk) EmsLoadCloudConfig() (*Sdk, error) {
 	temp = res.Data.Configs
 	// note: 判断是否存在default的配置文件，如果不存在，给予用户警告提示
 	if _, ok := temp["default"]; !ok {
-		logx.Alert("请注意，您的账号下没有default的配置文件，将会导致短信发送失败，发送前请SetConfig(key string)")
+		logx.Alert("请注意，您的账号下没有default的配置文件，将会导致邮件发送失败，发送前请SetConfig(key string)")
 	}
 
 	c.Ems.Configs = temp

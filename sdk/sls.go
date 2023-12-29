@@ -85,18 +85,18 @@ func (c *Sdk) SlsLoadCloudConfig() (*Sdk, error) {
 	// note: 加载云端配置
 	res, err := c.CloudCCheckStatus().CloudCSlsConfigGetAll()
 	if err != nil {
-		logx.Errorf("ems cloud config sync err: %v+", err)
+		logx.Errorf("sls cloud config sync err: %v+", err)
 		return c, err
 	}
 	if res.Code != response.SUCCESS {
-		logx.Errorf("ems cloud config sync err: %v+", res.Msg)
+		logx.Errorf("sls cloud config sync err: %v+", res.Msg)
 		return c, errors.New(res.Msg)
 	}
 	temp := make(map[string]*cloudc.ModelSlsConfig)
 	temp = res.Data.Configs
 	// note: 判断是否存在default的配置文件，如果不存在，给予用户警告提示
 	if _, ok := temp["default"]; !ok {
-		logx.Alert("请注意，您的账号下没有default的配置文件，将会导致短信发送失败，发送前请SetConfig(key string)")
+		logx.Alert("请注意，您的账号下没有default的配置文件，将会导致日志服务发送失败，发送前请SetConfig(key string)")
 	}
 
 	c.Sls.Configs = temp

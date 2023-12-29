@@ -81,11 +81,11 @@ func (c *Sdk) SmsLoadCloudConfig() (*Sdk, error) {
 	// note: 加载云端配置
 	res, err := c.CloudCCheckStatus().CloudCSmsConfigGetAll()
 	if err != nil {
-		logx.Errorf("ems cloud config sync err: %v+", err)
+		logx.Errorf("sms cloud config sync err: %v+", err)
 		return c, err
 	}
 	if res.Code != response.SUCCESS {
-		logx.Errorf("ems cloud config sync err: %v+", res.Msg)
+		logx.Errorf("sms cloud config sync err: %v+", res.Msg)
 		return c, errors.New(res.Msg)
 	}
 	temp := make(map[string]*cloudc.ModelSmsConfig)

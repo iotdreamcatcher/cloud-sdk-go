@@ -36,6 +36,10 @@ type Sdk struct {
 	Syncer              *Syncer
 }
 
+const (
+	keyRequestId = "requestId"
+)
+
 func NewSdk() *Sdk {
 	return &Sdk{
 		Status:   types.STATUS_NOT_READY,
@@ -207,9 +211,19 @@ func (c *Sdk) WithContext(ctx context.Context) context.Context {
 	return ctx
 }
 
-func (c *Sdk) SonyCtx() context.Context {
+// note: 添加将requestID继承到下个服务的能力
+func (c *Sdk) WithRequestId(requestId string) *Sdk {
+	c.Context = context.WithValue(c.Context, keyRequestId, requestId)
+	return c
+}
 
-	requestID := sony.NextId()
+func (c *Sdk) SonyCtx() context.Context {
+	requestID := ""
+	if value := c.Context.Value(keyRequestId); value != nil {
+		requestID = value.(string)
+	} else {
+		requestID = sony.NextId()
+	}
 	md := metadata.New(map[string]string{
 		"X-RequestID-For": requestID,
 		"X-AccessKey-For": c.Config.AccessKeyId,
